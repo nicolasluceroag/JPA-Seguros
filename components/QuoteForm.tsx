@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { InsuranceType, QuoteRequest } from "../types";
 import { INSURANCE_OPTIONS } from "../constants";
-import { getSmartAdvice } from "../services/geminiService";
 
 const QuoteForm: React.FC = () => {
   const [formData, setFormData] = useState<QuoteRequest>({
@@ -13,14 +12,6 @@ const QuoteForm: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [advice, setAdvice] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    const result = await getSmartAdvice(formData);
-    setAdvice(result);
-    setLoading(false);
-  };
 
   return (
     <section id="cotizar" className="py-24 bg-slate-50 scroll-mt-20">
@@ -62,7 +53,7 @@ const QuoteForm: React.FC = () => {
 
           <div className="lg:col-span-3 p-8 lg:p-12">
             {!advice ? (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={""} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-slate-700">

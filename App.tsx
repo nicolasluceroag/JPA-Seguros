@@ -1,12 +1,11 @@
-
-import React from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Partners from './components/Partners';
-import Coverages from './components/Coverages';
-import QuoteForm from './components/QuoteForm';
-import FAQ from './components/FAQ';
-import Footer from './components/Footer';
+import React from "react";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Partners from "./components/Partners";
+import Coverages from "./components/Coverages";
+import QuoteForm from "./components/QuoteForm";
+import FAQ from "./components/FAQ";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   return (
