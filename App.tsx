@@ -6,10 +6,11 @@ import Coverages from "./components/Coverages";
 import QuoteForm from "./components/QuoteForm";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
+import FloatingSocials from "./components/FloatingSocials";
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       <Navbar />
       <main>
         <Hero />
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <FAQ />
       </main>
       <Footer />
+      <FloatingSocials />
     </div>
   );
 };

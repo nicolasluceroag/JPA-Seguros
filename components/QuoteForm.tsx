@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { InsuranceType, QuoteRequest } from "../types";
 import { INSURANCE_OPTIONS } from "../constants";
 
@@ -10,24 +10,70 @@ const QuoteForm: React.FC = () => {
     insuranceType: InsuranceType.AUTO,
     details: "",
   });
+
   const [loading, setLoading] = useState(false);
-  const [advice, setAdvice] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // LÓGICA DE URL:
+    // Si existe la variable de entorno (en Vercel), úsala.
+    // Si no (en tu PC), usa localhost:5000.
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+    try {
+      const response = await fetch(`${apiUrl}/api/cotizar`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setLoading(false);
+        setSubmitted(true);
+      } else {
+        throw new Error("Error al enviar el correo");
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      alert(
+        "Hubo un problema al enviar la solicitud. Por favor intenta de nuevo más tarde."
+      );
+    }
+  };
+
+  const handleReset = () => {
+    setSubmitted(false);
+    setFormData({
+      fullName: "",
+      email: "",
+      phone: "",
+      insuranceType: InsuranceType.AUTO,
+      details: "",
+    });
+  };
 
   return (
     <section id="cotizar" className="py-24 bg-slate-50 scroll-mt-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden grid lg:grid-cols-5 border border-slate-100">
+          {/* Sidebar Azul */}
           <div className="lg:col-span-2 bg-blue-600 p-8 lg:p-12 text-white flex flex-col justify-between">
             <div>
               <h3 className="text-3xl font-bold mb-6">Cotiza ahora</h3>
               <p className="text-blue-100 mb-8">
-                Completa el formulario y recibe una asesoría preliminar por
-                nuestra IA en segundos.
+                Completa el formulario y un asesor especializado analizará tu
+                caso para ofrecerte las mejores opciones del mercado.
               </p>
               <ul className="space-y-4">
                 {[
                   "Atención Personalizada",
-                  "Respuesta en < 15 min",
+                  "Respuesta Rápida",
                   "Múltiples Opciones",
                 ].map((item, i) => (
                   <li key={i} className="flex items-center space-x-3">
@@ -51,9 +97,10 @@ const QuoteForm: React.FC = () => {
             </div>
           </div>
 
+          {/* Formulario */}
           <div className="lg:col-span-3 p-8 lg:p-12">
-            {!advice ? (
-              <form onSubmit={""} className="space-y-6">
+            {!submitted ? (
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-slate-700">
@@ -164,10 +211,10 @@ const QuoteForm: React.FC = () => {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
-                      <span>Analizando...</span>
+                      <span>Enviando...</span>
                     </>
                   ) : (
-                    <span>Cotizar con IA de Seguros Pro</span>
+                    <span>Solicitar Cotización</span>
                   )}
                 </button>
               </form>
@@ -191,46 +238,23 @@ const QuoteForm: React.FC = () => {
                   </div>
                   <h4 className="text-xl font-bold">¡Solicitud recibida!</h4>
                 </div>
+
                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 mb-8">
-                  <h5 className="text-sm font-bold text-blue-600 uppercase mb-4 flex items-center">
-                    <svg
-                      className="w-4 h-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                    Recomendación Inteligente Instantánea
-                  </h5>
-                  <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed whitespace-pre-line">
-                    {advice}
-                  </div>
+                  <p className="text-slate-700 leading-relaxed">
+                    Muchas gracias por tu interés,{" "}
+                    <strong>{formData.fullName}</strong>. Hemos recibido tus
+                    datos correctamente. Uno de nuestros productores se pondrá
+                    en contacto contigo a la brevedad para brindarte el
+                    asesoramiento que necesitas.
+                  </p>
                 </div>
+
                 <button
-                  onClick={() => {
-                    setAdvice(null);
-                    setFormData({
-                      fullName: "",
-                      email: "",
-                      phone: "",
-                      insuranceType: InsuranceType.AUTO,
-                      details: "",
-                    });
-                  }}
-                  className="text-blue-600 font-semibold hover:underline"
+                  onClick={handleReset}
+                  className="text-blue-600 font-semibold hover:underline text-left"
                 >
-                  ← Solicitar otra cotización
+                  ← Volver al formulario
                 </button>
-                <p className="mt-8 text-sm text-slate-400 text-center">
-                  Un asesor humano validará estos datos y te contactará en
-                  breve.
-                </p>
               </div>
             )}
           </div>

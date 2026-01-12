@@ -7,7 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules (librerías pesadas)
 node_modules
+server/node_modules
+
+# Archivos de distribución
 dist
 dist-ssr
 *.local
@@ -18,7 +22,12 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
-*.ntvs*
+*.ntvs
 *.njsproj
 *.sln
 *.sw?
+
+# ¡IMPORTANTE! Secretos y variables de entorno
+.env
+.env.*
+server/.env
