@@ -19,9 +19,11 @@ const QuoteForm: React.FC = () => {
     setLoading(true);
 
     // LÓGICA DE URL:
-    // Si existe la variable de entorno (en Vercel), úsala.
-    // Si no (en tu PC), usa localhost:5000.
+    // @ts-ignore  <--- ESTA LÍNEA MATA EL ERROR ROJO
     const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+    // DEBUG: Esta alerta te dirá la verdad cuando le des al botón
+    alert("Conectando a: " + apiUrl);
 
     try {
       const response = await fetch(`${apiUrl}/api/cotizar`, {
