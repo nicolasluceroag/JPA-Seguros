@@ -48,6 +48,7 @@ const Navbar: React.FC = () => {
 
           <div className="md:hidden flex items-center">
             <button
+              aria-label="Abrir menú"
               onClick={() => setIsOpen(!isOpen)}
               className="text-slate-600"
             >

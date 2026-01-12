@@ -155,7 +155,8 @@ const QuoteForm: React.FC = () => {
                     ¿Qué deseas asegurar?
                   </label>
                   <select
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none cursor-pointer"
+                    aria-label="Tipo de seguro"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none"
                     value={formData.insuranceType}
                     onChange={(e) =>
                       setFormData({
