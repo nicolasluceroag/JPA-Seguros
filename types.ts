@@ -1,11 +1,10 @@
-
 export enum InsuranceType {
-  AUTO = 'Automotriz',
-  LIFE = 'Vida',
-  HOME = 'Hogar',
-  HEALTH = 'Salud',
-  BUSINESS = 'Empresas',
-  TRAVEL = 'Viajes'
+  AUTO = "Automotor",
+  LIFE = "Vida",
+  HOME = "Hogar",
+  HEALTH = "Salud",
+  BUSINESS = "Empresas",
+  TRAVEL = "Viajes",
 }
 
 export interface QuoteRequest {

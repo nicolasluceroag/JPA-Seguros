@@ -125,7 +125,7 @@ const QuoteForm: React.FC = () => {
                     </label>
                     <input
                       required
-                      type="tel"
+                      type="number"
                       placeholder="Ingrese su teléfono"
                       className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                       value={formData.phone}
