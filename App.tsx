@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Partners from "./components/Partners";
 import Coverages from "./components/Coverages";
-import QuoteForm from "./components/QuoteForm";
+import QuoteForm from "./components/quoteSection/QuoteSection";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import FloatingSocials from "./components/FloatingSocials";

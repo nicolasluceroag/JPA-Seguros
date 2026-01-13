@@ -9,10 +9,17 @@ export enum InsuranceType {
 
 export interface QuoteRequest {
   fullName: string;
-  email: string;
   phone: string;
+  dni: string;
+  location: string;
+  email: string;
   insuranceType: InsuranceType;
-  details: string;
+  // Nuevos campos opcionales (solo para Auto)
+  brand?: string; // Marca
+  modelYear?: string; // Año
+  version?: string; // Versión/Modelo
+  plate?: string; // Patente
+  hasGNC?: boolean; // GNC
 }
 
 export interface FAQItem {

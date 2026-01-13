@@ -5,12 +5,11 @@ const Partners: React.FC = () => {
   return (
     <section id="companias" className="py-24 bg-white scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4">
-          Nuestros Aliados
-        </h2>
-        <h3 className="text-3xl font-bold text-slate-900 mb-12">
-          Respaldados por las mejores compañías
-        </h3>
+        <div className="text-center mb-16">
+          <h2 className="text-xl font-bold text-blue-600 uppercase tracking-widest mb-4">
+            Nuestros aliados
+          </h2>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 items-center">
           {PARTNERS.map((partner, index) => (
             <div
