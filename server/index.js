@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { Resend } = require("resend"); // Importamos Resend
+const { Resend } = require("resend");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Inicializamos Resend con la variable de entorno
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 app.get("/", (req, res) => {
@@ -19,25 +18,55 @@ app.get("/", (req, res) => {
 app.post("/api/cotizar", async (req, res) => {
   const { fullName, email, phone, insuranceType, details } = req.body;
 
+  // Diseño HTML del correo
+  const emailHtml = `
+    <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f4f7; padding: 40px 20px; color: #333;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        
+        <div style="background-color: #2563eb; padding: 30px; text-align: center;">
+          <h2 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: bold;">Nueva Solicitud de Cotización</h2>
+        </div>
+
+        <div style="padding: 30px;">
+         
+          <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr style="border-bottom: 1px solid #eee;">
+              <td style="padding: 10px 0; font-weight: bold; color: #333; width: 40%;">Cliente:</td>
+              <td style="padding: 10px 0; color: #555;">${fullName}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #eee;">
+              <td style="padding: 10px 0; font-weight: bold; color: #333;">Email:</td>
+              <td style="padding: 10px 0; color: #555;"><a href="mailto:${email}" style="color: #2563eb; text-decoration: none;">${email}</a></td>
+            </tr>
+            <tr style="border-bottom: 1px solid #eee;">
+              <td style="padding: 10px 0; font-weight: bold; color: #333;">Teléfono:</td>
+              <td style="padding: 10px 0; color: #555;">${phone}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #eee;">
+              <td style="padding: 10px 0; font-weight: bold; color: #333;">Tipo de Seguro:</td>
+              <td style="padding: 10px 0; color: #555;">
+                <span style="background-color: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; font-size: 14px; font-weight: 600;">${insuranceType}</span>
+              </td>
+            </tr>
+          </table>
+
+          <div style="background-color: #f9fafb; border-left: 4px solid #2563eb; padding: 15px; margin-top: 25px;">
+            <p style="font-weight: bold; margin: 0 0 5px 0; color: #333;">Detalles adicionales:</p>
+            <p style="margin: 0; font-style: italic;">${details}</p>
+          </div>
+        </div>
+
+       
+      </div>
+    </div>
+  `;
+
   try {
     const data = await resend.emails.send({
-      // IMPORTANTE: Si no tienes dominio propio verificado en Resend,
-      // DEBES usar este correo de prueba obligatoriamente:
       from: "onboarding@resend.dev",
-
-      // Aquí pon TU correo donde quieres recibir las alertas
       to: process.env.EMAIL_DESTINO,
-
-      subject: `Nueva Cotización: ${insuranceType} - ${fullName}`,
-      html: `
-        <h2>Nueva solicitud de cotización</h2>
-        <p><strong>Cliente:</strong> ${fullName}</p>
-        <p><strong>Email de contacto:</strong> ${email}</p>
-        <p><strong>Teléfono:</strong> ${phone}</p>
-        <p><strong>Tipo de Seguro:</strong> ${insuranceType}</p>
-        <p><strong>Detalles:</strong></p>
-        <p>${details}</p>
-      `,
+      subject: `📢 Cotización: ${insuranceType} - ${fullName}`,
+      html: emailHtml, // Usamos la variable con el HTML estilizado
     });
 
     console.log("Correo enviado:", data);

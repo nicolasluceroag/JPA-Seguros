@@ -23,7 +23,6 @@ const QuoteForm: React.FC = () => {
     const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
     // DEBUG: Esta alerta te dirá la verdad cuando le des al botón
-    alert("Conectando a: " + apiUrl);
 
     try {
       const response = await fetch(`${apiUrl}/api/cotizar`, {
