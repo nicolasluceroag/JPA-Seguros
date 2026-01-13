@@ -57,7 +57,18 @@ export const FormCheckbox: React.FC<CheckboxProps> = ({
   className,
   ...props
 }) => (
-  <div className="flex items-center space-x-3 py-2">
+  <div className="flex items-center gap-2 py-2">
+    <label
+      className="text-sm font-semibold text-slate-700 select-none cursor-pointer"
+      onClick={(e) => {
+        const input = (e.target as HTMLElement)
+          .nextElementSibling as HTMLInputElement;
+        if (input) input.click();
+      }}
+    >
+      {label}
+    </label>
+
     <input
       type="checkbox"
       className={`h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500 ${
@@ -65,16 +76,5 @@ export const FormCheckbox: React.FC<CheckboxProps> = ({
       }`}
       {...props}
     />
-    <label
-      className="text-sm font-semibold text-slate-700 select-none cursor-pointer"
-      onClick={(e) => {
-        // Hace que al dar click en el texto se active el checkbox
-        const input = (e.target as HTMLElement)
-          .previousElementSibling as HTMLInputElement;
-        if (input) input.click();
-      }}
-    >
-      {label}
-    </label>
   </div>
 );

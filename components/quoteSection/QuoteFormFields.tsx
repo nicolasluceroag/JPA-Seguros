@@ -77,7 +77,7 @@ export const QuoteFormFields: React.FC<Props> = ({
 
       {/* --- SECCIÓN 3: DATOS DEL VEHÍCULO (Condicional) --- */}
       {isAuto && (
-        <div className="bg-slate-100 p-6 rounded-xl border border-slate-200 space-y-6 animate-fadeIn mt-4">
+        <div className=" rounded-xl   space-y-6 animate-fadeIn ">
           <h4 className="font-bold text-slate-700 border-b border-slate-300 pb-2">
             Datos del Vehículo
           </h4>
